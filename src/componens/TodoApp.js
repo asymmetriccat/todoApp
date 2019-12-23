@@ -2,22 +2,24 @@ import React from "react";
 import Todos from "./Todos";
 import Header from "./Header";
 import '../App.css';
+import AddTodo from "./AddTodo";
+import uuid from "uuid";
 
 class TodoApp extends React.Component {
     state = {
         todos: [
             {
-                id: 1,
+                id: uuid.v4(),
                 title: "Setup development environment",
                 completed: true
             },
             {
-                id: 2,
+                id: uuid.v4(),
                 title: "develop website and add content",
                 completed: false
             },
             {
-                id: 3,
+                id: uuid.v4(),
                 title: "deployment",
                 completed: false
             }
@@ -45,15 +47,26 @@ class TodoApp extends React.Component {
             ]
         });
     };
+    addTodo = title =>{
+        const newTodo ={
+            id: uuid.v4(),
+            title:title,
+            completed: false
+        };
+        this.setState({
+            todos:[...this.state.todos, newTodo]
+        });
+    }
     render(){
         return (
             <div className="container">
                 <Header/>
+                <AddTodo addTodo ={this.addTodo}/>
                <Todos todos={this.state.todos}
                       handleChange = {this.handleChange}
                deleteTodo = {this.deleteTodo} />
-
             </div>
+
         );
     }
 }
