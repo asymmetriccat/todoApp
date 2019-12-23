@@ -15,6 +15,7 @@ class TodoItem extends React.Component{
                        checked = {completed}
                        onChange={()=>this.props.handleChange(id)}
                 />
+                <button className="btn-style" onClick={()=>this.props.deleteTodo(id)}>X</button>
                 <span style={completed? completedStyle: null}>
                 {title}
                 </span>
