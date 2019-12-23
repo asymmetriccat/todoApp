@@ -4,27 +4,11 @@ import Header from "./Header";
 import '../App.css';
 import AddTodo from "./AddTodo";
 import uuid from "uuid";
+import axios from "axios";
 
 class TodoApp extends React.Component {
     state = {
-        todos: [
-            {
-                id: uuid.v4(),
-                title: "Setup development environment",
-                completed: true
-            },
-            {
-                id: uuid.v4(),
-                title: "develop website and add content",
-                completed: false
-            },
-            {
-                id: uuid.v4(),
-                title: "deployment",
-                completed: false
-            }
-
-        ]
+        todos: []
     };
     handleChange =(id)=>{
        this.setState({
@@ -57,6 +41,15 @@ class TodoApp extends React.Component {
             todos:[...this.state.todos, newTodo]
         });
     }
+
+    componentDidMount() {
+        axios.get("https://jsonplaceholder.typicode.com/todos",{
+            params: {
+                _limit:10
+            }
+        }).then(response =>this.setState({todos: response.data}));
+    }
+
     render(){
         return (
             <div className="container">
