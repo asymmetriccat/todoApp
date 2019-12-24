@@ -23,23 +23,23 @@ class TodoApp extends React.Component {
     };
 
     deleteTodo =id =>{
+        axios.delete("https://jsonplaceholder.typicode.com/todos/${id}").then(response =>
         this.setState({
             todos: [
                 ...this.state.todos.filter(todo =>{
                 return todo.id!==id;}
                 )
             ]
-        });
+        }));
     };
     addTodo = title =>{
-        const newTodo ={
-            id: uuid.v4(),
-            title:title,
+        axios.post("https://jsonplaceholder.typicode.com/todos", {
+            title: title,
             completed: false
-        };
-        this.setState({
-            todos:[...this.state.todos, newTodo]
-        });
+        })
+            .then(response => this.setState({
+            todos:[...this.state.todos, response.data]
+        }));
     }
 
     componentDidMount() {
